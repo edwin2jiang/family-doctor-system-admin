@@ -1,0 +1,26 @@
+html,
+body {
+    height: 100%;
+}
+
+#app,
+#app > .page,
+.el-container {
+    height: 100%;
+}
+
+.inline-block {
+    display: inline-block;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.vertical-middle {
+    vertical-align: middle;
+}
+
+.p-4{
+    padding: 1rem;
+}
