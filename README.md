@@ -1,19 +1,13 @@
 # family-doctor-system-admin
 
-## Project setup
-```
+## 运行程序
+```sh
+npm i -g yarn # 如果没装过yarn
 yarn install
+yarn dev
 ```
 
-### Compiles and hot-reloads for development
-```
-yarn serve
-```
 
-### Compiles and minifies for production
-```
-yarn build
-```
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
