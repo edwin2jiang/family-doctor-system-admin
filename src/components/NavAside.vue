@@ -1,4 +1,13 @@
 <script>
+import {routes} from '@/config/NavAside.config.js'
+
+export default{
+    data(){
+        return {
+            routes
+        }
+    },
+}
 </script>
 
 <template>
@@ -10,28 +19,22 @@
                 class="el-menu-vertical-demo"
                 :router="true"
                 >
-                 <el-menu-item index="1" :route="{path: '/workstation'}">
-                    <i class="el-icon-monitor"></i>
-                    <span slot="title">工作台</span>
-                </el-menu-item>
-                <el-submenu index="2">
-                    <template slot="title">
-                        <i class="el-icon-location"></i>
-                        <span>签约管理</span>
-                    </template>
-                    <el-menu-item index="1-1">选项1</el-menu-item>
-                    <el-menu-item index="1-2">选项2</el-menu-item>
-                    <el-menu-item index="1-3">选项3</el-menu-item>
-                </el-submenu>
-                <el-menu-item index="3">
-                    <i class="el-icon-menu"></i>
-                    <span slot="title">导航二</span>
-                </el-menu-item>
-                <el-menu-item index="4">
-                    <i class="el-icon-setting"></i>
-                    <span slot="title">导航四</span>
-                </el-menu-item>
-                </el-menu>
+                <template v-for="item,index of routes">
+                    <!-- 仅有一个menu -->
+                    <el-menu-item v-if="item.children === undefined || item.children.length === 0" :index="index+''" :route="{path: item.path}" :key="index">
+                        <i :class="item.icon"></i>
+                        <span slot="title">{{item.zh}}</span>
+                    </el-menu-item>
+                    <!-- 含有子menu -->
+                    <el-submenu :index="index+''" :key="index" v-else>
+                        <template slot="title">
+                            <i :class="item.icon"></i>
+                            <span>{{ item.zh}} </span>
+                        </template>
+                        <el-menu-item :index="index+'-'+i" v-for="e,i in item.children" :key="i" :route="{path: item.path + e.path}">{{e.zh}}</el-menu-item>
+                    </el-submenu>
+                </template>
+        </el-menu>
     </div>
 </template>
  
@@ -40,6 +43,7 @@
     width: 220px;
     height: 100%;
     background: #fff;
+    overflow-x: hidden;
 }
 
 .title{
