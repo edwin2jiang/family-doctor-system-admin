@@ -25,4 +25,4 @@ vue2全家桶，elementui，mockjs,  axios
 
 ## 🐱‍🏍运行效果
 
-![image-20220412125636661](C:/Users/Administrator/AppData/Roaming/Typora/typora-user-images/image-20220412125636661.png)
+![image-20220412125636661](http://imgbed-xia-2.oss-cn-hangzhou.aliyuncs.com/img/image-20220412125636661.png)
