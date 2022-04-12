@@ -1,5 +1,8 @@
 # ✨family-doctor-system-admin ( 家庭医生管理系统 )
 
+**目前仅是基础骨架**
+
+
 ## 🏆运行程序
 ```sh
 npm i -g yarn # 如果没装过yarn
@@ -22,3 +25,4 @@ vue2全家桶，elementui，mockjs,  axios
 
 ## 🐱‍🏍运行效果
 
+![image-20220412125636661](C:/Users/Administrator/AppData/Roaming/Typora/typora-user-images/image-20220412125636661.png)
