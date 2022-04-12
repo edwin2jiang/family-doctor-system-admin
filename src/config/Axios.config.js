@@ -1,5 +1,5 @@
 import axios from "axios"
-import { baseURL } from "@/config/Axios.config.js"
+import { baseURL } from "@/config/ConstVariable.js"
 
 export const request = axios.create({
     baseURL: baseURL, 
