@@ -1,7 +1,7 @@
 <script>
 export default {
     created(){
-        // 访问请求示例( api/xxx  mockjs)
+        // 访问请求示例( api/xxx  mockjs)  
         this.$axios('/parameter/query').then(res=>{
             console.log(res)
             this.$refs.box.innerHTML= JSON.stringify(res.data)
