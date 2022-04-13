@@ -14,7 +14,7 @@ export default {
     <div>
         <div>Workstaion</div>
         <br>
-        <h2 style="font-size: 20px;color:#aaa;">这是一个mockjs请求示例</h2>
+        <h2 style="font-size: 20px;color:#aaa;">这是一个mockjs请求示例 (src/api/demoList.js)</h2>
         <br>
         <pre ref="box"></pre>
     </div>
