@@ -1,8 +1,10 @@
 <script>
 import MyFooter from "../../components/MyFooter.vue";
+import { localStorage } from 'reactive-localstorage';
+
 
 export default {
-    components: {MyFooter},
+    components: { MyFooter },
     data() {
         return {
             currSwipper: {
@@ -13,6 +15,17 @@ export default {
                 publishDate: '',
                 status: true,
                 link: ''
+            },
+            rules: {
+                pic: [
+                    { required: true }
+                ],
+                publishDate: [
+                    { required: true }
+                ],
+                no: [
+                    { required: true }
+                ],
             }
         }
     },
@@ -20,13 +33,43 @@ export default {
         // this.currSwipper = this.$store.state.currSwipper
     },
     methods: {
+        getLocal(key) {
+            return JSON.parse(localStorage.getItem(key))
+        },
+        setLocal(key, value) {
+            localStorage.setItem(key, JSON.stringify(value))
+        },
         onSubmit() {
-            console.log('submit!');
+            this.$refs['form'].validate((valid) => {
+                console.log(valid)
+                if (!valid) {
+                    this.$notify({
+                        title: '错误',
+                        message: '数据输入不正确',
+                        type: 'error'
+                    });
+                } else {
+                    // console.log('submit!');
+                    const banners = this.getLocal('banners')
+                    banners.push(this.currSwipper)
+                    this.setLocal('banners', banners)
+
+                    this.$notify({
+                        title: 'Success',
+                        message: '🎁 添加数据成功',
+                        type: 'success'
+                    });
+
+                    this.$router.push({
+                        path: '/SystemConfig/Swipper'
+                    })
+                }
+            })
         },
         selectFile() {
             console.log(this.$refs.fileInput)
             this.$refs.fileInput.click()
-        }
+        },
     }
 }
 </script>
@@ -42,7 +85,7 @@ export default {
 
             <div>
                 <h2 class="swipper-title">轮播图信息</h2>
-                <el-form ref="form" :model="currSwipper" label-width="120px">
+                <el-form ref="form" :model="currSwipper" label-width="120px" :rules="rules">
                     <el-form-item label="轮播图标题">
                         <el-input v-model="currSwipper.name" class="w25"></el-input>
                     </el-form-item>
@@ -62,16 +105,16 @@ export default {
                     <el-form-item label="轮播图状态">
                         <el-switch v-model="currSwipper.status"></el-switch>
                     </el-form-item>
-                    <el-form-item label="发布时间" required>
+                    <el-form-item label="发布时间" prop="publishDate">
                         <el-date-picker class="w25" v-model="currSwipper.publishDate" type="date" placeholder="选择日期">
                         </el-date-picker>
                     </el-form-item>
-                    <el-form-item label="排序号" required>
+                    <el-form-item label="排序号" prop="no">
                         <el-input v-model="currSwipper.no" class="w25"></el-input>
                         <span class="txt">请填写数字，数字越大排序越靠前</span>
                     </el-form-item>
                     <el-form-item label="发布人">
-                        {{ currSwipper.publisher }}
+                        <el-input v-model="currSwipper.publisher" class="w25"></el-input>
                     </el-form-item>
                     <el-form-item>
                         <el-button type="primary" @click="onSubmit">发布</el-button>

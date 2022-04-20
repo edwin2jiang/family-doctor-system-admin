@@ -1,11 +1,14 @@
 <script>
 import MyFooter from "../../components/MyFooter.vue";
+import { localStorage } from 'reactive-localstorage';
+
 
 export default {
     components: { MyFooter },
     data() {
         return {
             currSwipper: {
+                index: '',
                 no: 94,
                 pic: '/swipper/banner.jpg',
                 name: '',
@@ -21,8 +24,43 @@ export default {
         this.currSwipper = this.$store.state.currSwipper
     },
     methods: {
+        getLocal(key) {
+            return JSON.parse(localStorage.getItem(key))
+        },
+        setLocal(key, value) {
+            localStorage.setItem(key, JSON.stringify(value))
+        },
+        handelDelete() {
+            this.dialogVisible = false
+            console.log('删除了', this.index)
+
+            const banners = this.getLocal('banners')
+
+            let tmp = banners
+            tmp.splice(this.index, 1)
+            this.setLocal('banners', tmp)
+
+            // 返回之前的界面
+            this.$router.push({
+                path: '/SystemConfig/SwipperEdit',
+            })
+        },
         onSubmit() {
-            console.log('submit!');
+            const banners = this.getLocal('banners')
+
+            banners.splice(this.currSwipper.index, 1, this.currSwipper)
+
+            this.setLocal('banners', banners)
+
+            this.$notify({
+                title: 'Success',
+                message: '🎉 修改信息成功',
+                type: 'success'
+            });
+
+            this.$router.push({
+                path: '/SystemConfig/Swipper'
+            })
         },
         selectFile() {
             console.log(this.$refs.fileInput)
@@ -93,7 +131,7 @@ export default {
             <span>确定要删除该轮播图吗？</span>
             <span slot="footer" class="dialog-footer">
                 <el-button @click="dialogVisible = false">取 消</el-button>
-                <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+                <el-button type="primary" @click="handelDelete">确 定</el-button>
             </span>
         </el-dialog>
     </div>

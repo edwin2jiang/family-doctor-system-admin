@@ -1,6 +1,8 @@
 <script>
 import MyFooter from "../../components/MyFooter.vue";
 import MySwitch from "../../components/MySwitch.vue";
+import { localStorage } from 'reactive-localstorage';
+
 export default {
     data() {
         return {
@@ -72,12 +74,13 @@ export default {
         }
     },
     methods: {
-        handleClick(row) {
+        handleClick(row, index) {
+            row.index = index
+            console.log(row)
             this.$store.commit("setCurrentSwipper", row)
             this.$router.push({
                 path: '/SystemConfig/SwipperEdit',
             })
-            console.log(row);
         },
         handelOpen(index) {
             this.index = index
@@ -86,8 +89,37 @@ export default {
         handelDelete() {
             this.dialogVisible = false
             console.log('删除了', this.index)
-            this.banners.splice(this.index, 1)
+
+            let tmp = this.banners
+            tmp.splice(this.index, 1)
+            this.setLocal('banners', tmp)
+        },
+        getLocal(key) {
+            return JSON.parse(localStorage.getItem(key))
+        },
+        setLocal(key, value) {
+            localStorage.setItem(key, JSON.stringify(value))
+        },
+        search() {
+            // 1. 获取全部数据
+            const banners = this.getLocal('banners')
+            this.banners = banners.filter(item => (item.name.indexOf(this.inputText) !== -1))
         }
+    },
+    created() {
+        // 通过locastorage缓存数据. 响应式的localstorage
+        const { getLocal, setLocal } = this
+        localStorage.on('change', (key, value) => {
+            console.log(`key ${key} changed to ${JSON.stringify(value)}`);
+            if (key === 'bannners')
+                this.banners = getLocal('banners')
+        });
+
+        if (!localStorage.getItem('banners'))
+            // 初始化
+            setLocal('banners', this.banners)
+
+        this.banners = getLocal('banners')
     },
     components: {
         MyFooter,
@@ -107,8 +139,8 @@ export default {
                 <el-date-picker v-model="timeValue" type="daterange" align="right" unlink-panels range-separator="-"
                     start-placeholder="开始日期" end-placeholder="结束日期" :picker-options="pickerOptions">
                 </el-date-picker>
-                <el-input placeholder="请输入内容" v-model="inputText">
-                    <i slot="suffix" class="el-input__icon el-icon-search"></i>
+                <el-input placeholder="请输入内容" v-model="inputText" @keyup.enter.native="search">
+                    <i slot="suffix" class="el-input__icon el-icon-search" @click="search" style="cursor: pointer;"></i>
                 </el-input>
                 <el-button type="primary" class="btn" @click="$router.push({ path: '/SystemConfig/SwipperCreate' })">
                     新增轮播图
@@ -139,7 +171,7 @@ export default {
                 </el-table-column>
                 <el-table-column fixed="right" label="操作" width="100">
                     <template slot-scope="scope">
-                        <el-button @click="handleClick(scope.row)" type="text" size="small">编辑</el-button>
+                        <el-button @click="handleClick(scope.row, scope.$index)" type="text" size="small">编辑</el-button>
                         <el-button type="text" size="small" class="delete" @click="handelOpen(scope.$index)">删除
                         </el-button>
                     </template>
