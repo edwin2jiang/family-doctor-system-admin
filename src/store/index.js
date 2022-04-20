@@ -5,10 +5,16 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    currSwipper: {},
   },
   mutations: {
+    setCurrentSwipper(state, payload) {
+      state.currSwipper = payload
+    },
+    
   },
   actions: {
+
   },
   modules: {
   }

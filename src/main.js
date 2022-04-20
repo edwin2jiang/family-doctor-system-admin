@@ -12,7 +12,7 @@ Vue.config.productionTip = false
 Vue.prototype.$axios = request // 将axios挂载到vue的原型上
 
 
-// 开发环境引入mockjs( 如果是生产环境，可以注释掉这个 )
+// 开发环境引入mockjs( 如果是生产环境，这一行不会生效, 引入mockjs )
 if (process.env.NODE_ENV !== 'production') require('./api/index.js')
 
 

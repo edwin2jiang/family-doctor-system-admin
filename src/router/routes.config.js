@@ -162,6 +162,16 @@ const routes = [
                 name: 'Swipper',
                 zh: '轮播图管理',
                 component: () => import('../pages/SystemConfig/Swipper.vue')
+            }, {
+                path: 'SwipperEdit',
+                name: 'SwipperEdit',
+                zh: '轮播图编辑',
+                component: () => import('../pages/SystemConfig/SwipperEdit.vue')
+            }, {
+                path: 'SwipperCreate',
+                name: 'SwipperCreate',
+                zh: '新增轮播图',
+                component: () => import('../pages/SystemConfig/SwipperCreate.vue')
             },
             {
                 path: 'Notice',

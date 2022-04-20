@@ -26,7 +26,7 @@ export default{
                         <span slot="title">{{item.zh}}</span>
                     </el-menu-item>
                     <!-- 含有子menu -->
-                    <el-submenu :index="index+''" :key="index" v-else>
+                    <el-submenu :index="index+''" v-else>
                         <template slot="title">
                             <i :class="item.icon"></i>
                             <span>{{ item.zh}} </span>
