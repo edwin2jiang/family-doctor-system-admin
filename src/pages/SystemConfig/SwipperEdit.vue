@@ -42,7 +42,7 @@ export default {
 
             // 返回之前的界面
             this.$router.push({
-                path: '/SystemConfig/SwipperEdit',
+                path: '/SystemConfig/Swipper',
             })
         },
         onSubmit() {

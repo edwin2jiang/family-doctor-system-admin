@@ -2,6 +2,11 @@
 
 **目前仅是基础骨架**
 
+## 👌 界面预览
+
+
+[腾讯云CI/CD](https://doctor-admin-8glda3yvd22a5ab0-1259020893.ap-shanghai.app.tcloudbase.com/)
+
 
 ## 🏆运行程序
 ```sh
